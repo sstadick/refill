@@ -1,0 +1,9 @@
+[package]
+name = "facet-template"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+facet = { version = "0.46.4", features = ["reflect"] }
+facet-pretty = "0.46.4"
+rediff = "0.46.1"
