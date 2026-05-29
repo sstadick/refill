@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  pull_request:
+
+jobs:
+  pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: lint
+        run: |
+          cargo check
+          cargo clippy
+
+      - name: fmt
+        run: cargo fmt --check
+
+      - name: test
+        run: cargo test

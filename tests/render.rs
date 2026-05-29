@@ -1,5 +1,5 @@
 use facet::Facet;
-use facet_template::Template;
+use refill::Template;
 
 fn check<'facet, Ctx: Facet<'facet>>(tmpl: &'static str, ctx: Ctx, expected: &'static str) {
     let found = Template::new(tmpl).fill(&ctx).unwrap();
@@ -18,9 +18,9 @@ fn test_basic_replace() {
     }
 
     check(
-        "Hello, my name is {name}.",
+        "Hello, my name is {{name}}",
         Ctx { name: s("Seth") },
-        "Hello, my name is Seth.",
+        "Hello, my name is Seth",
     )
 }
 
@@ -33,7 +33,7 @@ fn test_replace() {
     }
 
     check(
-        "Hello, my name is {name}. The id is {id}.",
+        "Hello, my name is {{name}}. The id is {{id}}.",
         Ctx {
             name: s("Seth"),
             id: 42,
@@ -68,7 +68,7 @@ fn test_replace_custom_object() {
     }
 
     check(
-        "Hello, my name is {name}. Custom profile is {custom}.",
+        "Hello, my name is {{name}}. Custom profile is {{custom}}.",
         Ctx {
             name: s("Seth"),
             custom: Custom {
@@ -77,28 +77,66 @@ fn test_replace_custom_object() {
             },
             multi: vec![0, 1, 2, 3],
         },
-        "Hello, my name is Seth. Custom profile is {special_field: 42.1, special_name: Also Seth.}.",
+        "Hello, my name is Seth. Custom profile is {special_field: 42.1, special_name: Also Seth}.",
     )
 }
 
 #[test]
-fn test_replace() {
+fn test_replace_simple_path() {
+    #[derive(Facet)]
+    struct Custom {
+        special_field: f64,
+        special_name: String,
+    }
+
     #[derive(Facet)]
     struct Ctx {
         name: String,
-        id: usize,
+        custom: Custom,
+        multi: Vec<usize>,
     }
 
     check(
-        "Hello, my name is {name}. The id is {id}.
-{#if foo}Foo is True{#endif}
-{#if !foo}Foo is not True{#else}Foo is True{#endif}
-{#if !foo}Foo is notTrue{#elseif bar}Bar is True{#elseif car}Car is True{#endif}
-",
+        "Hello, my name is {{custom.special_name}}.",
         Ctx {
             name: s("Seth"),
-            id: 42,
+            custom: Custom {
+                special_field: 42.1,
+                special_name: s("Also Seth"),
+            },
+            multi: vec![0, 1, 2, 3],
         },
-        "Hello, my name is Seth. The id is 42.",
+        "Hello, my name is Also Seth.",
+    )
+}
+
+#[test]
+fn test_replace_ref_path() {
+    #[derive(Facet)]
+    struct Custom {
+        special_field: f64,
+        special_name: String,
+    }
+
+    #[derive(Facet)]
+    struct Ctx<'a> {
+        name: String,
+        custom: &'a Custom,
+        multi: Vec<usize>,
+    }
+
+    let c = Custom {
+        special_field: 42.1,
+        special_name: s("Also Seth"),
+    };
+
+    check(
+        "Hello, my name is {{custom.special_name}}.",
+        Ctx {
+            name: s("Seth"),
+            custom: &c,
+            multi: vec![0, 1, 2, 3],
+        },
+        "Hello, my name is Also Seth.",
     )
 }
