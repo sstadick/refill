@@ -1,4 +1,4 @@
-//! `refill` is a small template library based on [`facet`](https://github.com/facet-rs).
+//! `refill` is a small template library based on [`facet`](https://github.com/facet-rs/facet).
 //!
 //! ## Example
 //!
@@ -36,9 +36,9 @@
 //!
 //! ## Key Features
 //!
-//! - Allows for arbitrary path-based specifieres.
-//! - Formats based on the the `Display` impl for the type in question.
-//! - Fields on the passed in `ctx` type are used as the values in the templates.
+//! - Supports nested struct field paths.
+//! - Formats based on the `Display` impl for the type in question.
+//! - Fields on the passed-in `ctx` type are used as the values in the templates.
 pub mod error;
 
 use crate::error::{TemplateError, TemplateErrorKind};
@@ -46,7 +46,7 @@ use facet::{Facet, Peek, PointerType, Type};
 
 /// The parts of the template.
 ///
-/// Effecitvely tokens.
+/// Effectively tokens.
 #[derive(Facet)]
 #[repr(u8)]
 enum Chunk<'a> {
@@ -59,7 +59,7 @@ enum Chunk<'a> {
 pub struct Template<'a> {
     /// The raw template string
     raw: &'a str,
-    /// The parsed template string brooken up into tokens
+    /// The parsed template string broken up into tokens
     chunks: Vec<Chunk<'a>>,
 }
 

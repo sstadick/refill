@@ -4,7 +4,7 @@
 [![Docs.rs](https://docs.rs/refill/badge.svg)](https://docs.rs/refill)
 [![License](https://img.shields.io/crates/l/refill.svg)](https://crates.io/crates/refill)
 
-A very small template library based on [`facet`](https://github.com/facet-rs)
+A very small template library based on [`facet`](https://github.com/facet-rs/facet)
 
 ## Example
 

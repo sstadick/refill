@@ -2,6 +2,7 @@
 name = "refill"
 version = "0.1.0"
 edition = "2024"
+description = "A small template library based on facet."
 license = "MIT OR Unlicense"
 repository = "https://github.com/sstadick/refill"
 
