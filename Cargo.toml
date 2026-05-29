@@ -1,7 +1,10 @@
 [package]
-name = "facet-template"
+name = "refill"
 version = "0.1.0"
 edition = "2024"
+description = "A small template library based on facet."
+license = "MIT OR Unlicense"
+repository = "https://github.com/sstadick/refill"
 
 [dependencies]
 facet = { version = "0.46.4", features = ["reflect"] }

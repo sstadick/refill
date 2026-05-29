@@ -25,7 +25,7 @@ impl core::fmt::Display for TemplateErrorKind {
                 write!(f, "Invalid Ctx type: {}", reflect_error)?
             }
             TemplateErrorKind::MissingFieldError { expected } => {
-                write!(f, "Expected a field on Ctx for {}, non found.", expected)?
+                write!(f, "Expected a field on Ctx for {}, none found.", expected)?
             }
         }
         Ok(())
