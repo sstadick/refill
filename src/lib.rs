@@ -99,21 +99,6 @@ fn parse_tmpl(tmpl: &str) -> Vec<Chunk<'_>> {
         chunks.push(Chunk::Text(&tmpl[i..]));
     }
 
-    // for (idx, c) in tmpl.char_indices() {
-    //     if c == '{' {
-    //         in_expr = true;
-    //         chunks.push(Chunk::Text(&tmpl[start..idx]));
-    //         start = idx + 1;
-    //     } else if in_expr && c == '}' {
-    //         in_expr = false;
-    //         chunks.push(Chunk::Expr(&tmpl[start..idx]));
-    //         start = idx + 1;
-    //     }
-    // }
-    // if start < tmpl.len() {
-    //     // Can only be text since an expr would have hit the closing bracket.
-    //     chunks.push(Chunk::Text(&tmpl[start..]));
-    // }
     chunks
 }
 
